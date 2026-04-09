@@ -1,4 +1,4 @@
-зр#!/bin/bash
+#!/bin/bash
 
 echo "Running DB migration..."
 
