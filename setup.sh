@@ -9,19 +9,19 @@ sudo systemctl start postgresql
 sudo systemctl enable postgresql
 
 echo "Setting up database..."
-chmod +x setup_db.sh
+sudo chmod +x setup_db.sh
 ./setup_db.sh
 
 echo "Creating application config..."
-chmod +x setup_config.sh
+sudo chmod +x setup_config.sh
 ./setup_config.sh
 
 echo "Building project..."
-chmod +x mvnw
+sudo chmod +x mvnw
 ./mvnw clean package -DskipTests
 
 echo "Preparing permissions..."
-chmod +x migrate_db.sh
+sudo chmod +x migrate_db.sh
 sudo chown -R app:app /home/app/mywebapp
 
 echo "Creating systemd service..."
@@ -55,5 +55,8 @@ sudo systemctl daemon-reload
 
 sudo systemctl enable mywebapp
 sudo systemctl start mywebapp
+
+sudo chmod +x setup_nginx.sh
+./setup_nginx.sh
 
 echo "Setup completed"
