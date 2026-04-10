@@ -8,6 +8,10 @@ echo "Starting PostgreSQL..."
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
 
+echo "Setting up users..."
+chmod +x setup_users.sh
+./setup_users.sh
+
 echo "Setting up database..."
 sudo chmod +x setup_db.sh
 ./setup_db.sh
