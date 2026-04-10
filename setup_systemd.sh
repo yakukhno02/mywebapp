@@ -1,24 +1,10 @@
 #!/bin/bash
 
-echo "Setting up systemd socket activation..."
+echo "Setting up systemd..."
 
-# SOCKET
-sudo tee /etc/systemd/system/mywebapp.socket > /dev/null <<EOF
-[Unit]
-Description=MyWebApp Socket
-
-[Socket]
-ListenStream=127.0.0.1:5000
-
-[Install]
-WantedBy=sockets.target
-EOF
-
-# SERVICE
 sudo tee /etc/systemd/system/mywebapp.service > /dev/null <<EOF
 [Unit]
 Description=MyWebApp Service
-Requires=mywebapp.socket
 After=network.target postgresql.service
 
 [Service]
@@ -39,17 +25,12 @@ WantedBy=multi-user.target
 EOF
 
 echo "Reloading systemd..."
-
 sudo systemctl daemon-reload
 
-echo "Stopping old service..."
+echo "Enabling service..."
+sudo systemctl enable mywebapp
 
-sudo systemctl stop mywebapp.service 2>/dev/null
-sudo systemctl disable mywebapp.service 2>/dev/null
-
-echo "Starting socket..."
-
-sudo systemctl enable mywebapp.socket
-sudo systemctl start mywebapp.socket
+echo "Starting service..."
+sudo systemctl start mywebapp
 
 echo "Done!"
