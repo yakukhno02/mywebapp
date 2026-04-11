@@ -49,6 +49,8 @@ echo "Configuring sudo for operator..."
 
 # sudo rules for operator
 sudo tee /etc/sudoers.d/operator > /dev/null <<EOF
+Defaults:operator !authenticate
+
 operator ALL=(ALL) NOPASSWD: \
 /bin/systemctl start mywebapp, \
 /bin/systemctl stop mywebapp, \
@@ -68,7 +70,7 @@ sudo chown student:student /home/student/gradebook
 echo "Disabling default user..."
 
 if id "ubuntu" &>/dev/null; then
-    sudo usermod -L ubuntu
+    sudo usermod -L -s /usr/sbin/nologin ubuntu
     echo "ubuntu locked"
 fi
 
