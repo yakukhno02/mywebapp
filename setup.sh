@@ -25,8 +25,11 @@ sudo chmod +x mvnw
 ./mvnw clean package -DskipTests
 
 echo "Preparing permissions..."
-sudo chmod +x migrate_db.sh
+sudo mkdir -p /home/app
+sudo cp -r /home/ubuntu/mywebapp /home/app/
 sudo chown -R app:app /home/app/mywebapp
+
+sudo chmod +x /home/app/mywebapp/migrate_db.sh
 
 echo "Setting up systemd..."
 
