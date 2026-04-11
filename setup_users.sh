@@ -25,7 +25,11 @@ fi
 
 # OPERATOR
 if ! id "operator" &>/dev/null; then
-    sudo useradd -m -s /bin/bash operator
+    if ! getent group operator > /dev/null; then
+        sudo groupadd operator
+    fi
+
+    sudo useradd -m -s /bin/bash -g operator operator
     echo "operator:12345678" | sudo chpasswd
     sudo chage -d 0 operator
     echo "operator created"
@@ -33,7 +37,7 @@ else
     echo "operator already exists"
 fi
 
-# APP (system user)
+# APP
 if ! id "app" &>/dev/null; then
     sudo useradd -r -s /usr/sbin/nologin app
     echo "app created"
@@ -43,7 +47,7 @@ fi
 
 echo "Configuring sudo for operator..."
 
-# sudo rules для operator
+# sudo rules for operator
 sudo tee /etc/sudoers.d/operator > /dev/null <<EOF
 operator ALL=(ALL) NOPASSWD: \
 /bin/systemctl start mywebapp, \
@@ -58,7 +62,7 @@ sudo chmod 440 /etc/sudoers.d/operator
 echo "Creating gradebook..."
 
 sudo mkdir -p /home/student
-echo "29" | sudo tee /home/student/gradebook
+echo -n "29" | sudo tee /home/student/gradebook > /dev/null
 sudo chown student:student /home/student/gradebook
 
 echo "Disabling default user..."
@@ -69,4 +73,3 @@ if id "ubuntu" &>/dev/null; then
 fi
 
 echo "Users setup completed!"
-
