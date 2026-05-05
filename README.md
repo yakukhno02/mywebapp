@@ -1,3 +1,11 @@
+## Labs Navigation
+
+- [Lab1 – VM Deployment](#lab1--vm-deployment)
+
+- [Lab2 – Docker Deployment](#-docker-deployment-lab2)
+
+## Lab1 – VM Deployment
+
 # mywebapp
 
 ## 📌 Description
@@ -270,3 +278,31 @@ Expected output:
 ```
 29
 ```
+
+## 🐳 Docker Deployment (Lab2)
+
+Application is containerized using Docker and Docker Compose.
+
+### Services:
+- **web** – Spring Boot application (port 5000)
+- **nginx** – reverse proxy (port 80 → exposed as 8080)
+- **database** – PostgreSQL with persistent storage
+
+### Features:
+- Separate Docker network (not default)
+- Database data persists using volume (`db_data`)
+- Automatic startup of all services via Docker Compose
+- DB migration runs on container start
+
+### Run:
+
+```bash
+docker compose up --build
+```
+
+### Access: 
+
+* Web application (via nginx):
+    http://localhost:8080/items
+* Health check:
+    http://localhost:8080/health/alive
