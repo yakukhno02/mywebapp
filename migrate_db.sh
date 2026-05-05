@@ -2,7 +2,9 @@
 
 echo "Running DB migration..."
 
-psql -U app -d mywebapp <<EOF
+export PGPASSWORD=12345678
+
+psql -h database -U app -d mywebapp <<EOF
 
 CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
@@ -11,13 +13,13 @@ CREATE TABLE IF NOT EXISTS items (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO items (name, quantity)
+INSERT INTO items (name, quantity, created_at)
 VALUES
-  ('Laptop', 10),
-  ('Phone', 25),
-  ('Keyboard', 15),
-  ('Mouse', 30),
-  ('Monitor', 8)
+  ('Laptop', 10, NOW()),
+  ('Phone', 25, NOW()),
+  ('Keyboard', 15, NOW()),
+  ('Mouse', 30, NOW()),
+  ('Monitor', 8, NOW())
 ON CONFLICT DO NOTHING;
 
 EOF
