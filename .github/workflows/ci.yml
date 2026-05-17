@@ -40,3 +40,19 @@ jobs:
           name: checkstyle-report
           path: target/checkstyle/*
           retention-days: 15
+
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+      - name: Run ShellCheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+          find . -name "*.sh" -exec shellcheck {} \;
+
+      - name: Run Yamllint
+        run: |
+          sudo apt-get install -y yamllint
+          yamllint .
