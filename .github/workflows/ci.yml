@@ -1,5 +1,5 @@
 ---
-name: Checkstyle CI
+name: Code Quality CI
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
       - main
 
 jobs:
-  checkstyle:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -57,3 +57,13 @@ jobs:
         run: |
           sudo apt-get install -y yamllint
           yamllint .
+
+      - name: Run tests
+        run: ./mvnw clean verify
+
+      - name: Upload JaCoCo Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco
+          retention-days: 15
