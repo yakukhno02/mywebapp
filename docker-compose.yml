@@ -1,6 +1,7 @@
 ---
 services:
   database:
+    container_name: database
     image: postgres:16
     environment:
       POSTGRES_DB: mywebapp
@@ -12,7 +13,8 @@ services:
       - my_network
 
   web:
-    build: .
+    container_name: mywebapp
+    image: ghcr.io/yakukhno02/mywebapp:latest
     depends_on:
       - database
     networks:
