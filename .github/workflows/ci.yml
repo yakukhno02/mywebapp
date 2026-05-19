@@ -119,14 +119,17 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy compose files
+        run: |
+          scp docker-compose.yml nginx.conf app@192.168.64.23:~/
+
       - name: Deploy application
         run: |
           ssh app@192.168.64.23 "
-            docker pull ghcr.io/yakukhno02/mywebapp:latest &&
-            docker stop mywebapp || true &&
-            docker rm mywebapp || true &&
-            docker run -d \
-              --name mywebapp \
-              -p 8080:8080 \
-              ghcr.io/yakukhno02/mywebapp:latest
+            docker compose down || true &&
+            docker compose pull &&
+            docker compose up -d
           "
