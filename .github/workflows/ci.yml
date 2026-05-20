@@ -106,8 +106,7 @@ jobs:
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,format=long,prefix=sha-
-            type=raw,value=stable,\
-              enable={{is_tag}}
+            type=raw,value=stable,enable={{is_tag}}
             type=ref,event=tag
 
       - name: Build and push Docker image
