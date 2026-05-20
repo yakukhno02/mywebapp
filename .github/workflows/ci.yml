@@ -104,9 +104,9 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository_owner }}/mywebapp
           tags: |
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=latest
             type=sha,format=long,prefix=sha-
-            type=raw,value=stable,enable={{is_tag}}
+            type=raw,value=stable
             type=ref,event=tag
 
       - name: Build and push Docker image
