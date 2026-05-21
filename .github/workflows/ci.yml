@@ -137,3 +137,10 @@ jobs:
             docker compose pull &&
             docker compose up -d
           "
+
+      - name: Verify deployment
+        run: |
+          ssh app@192.168.64.23 "
+            sleep 15 &&
+            curl -fsS http://localhost:8080
+          "
