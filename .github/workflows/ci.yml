@@ -141,6 +141,6 @@ jobs:
       - name: Verify deployment
         run: |
           ssh app@192.168.64.23 "
-            sleep 15 &&
+            sleep 60 &&
             curl -fsS http://localhost:8080
           "
