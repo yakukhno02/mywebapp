@@ -4,6 +4,8 @@
 
 - [Lab2 – Docker Deployment](#-docker-deployment-lab2)
 
+- [Lab3 – CI/CD](#-cicd-lab3)
+
 ## Lab1 – VM Deployment
 
 # mywebapp
@@ -306,3 +308,29 @@ docker compose up --build
     http://localhost:8080/items
 * Health check:
     http://localhost:8080/health/alive
+
+## 🔄 CI/CD (Lab3)
+
+Implemented CI/CD pipeline using GitHub Actions.
+
+### Pipeline stages:
+- code quality checks
+- automated tests
+- Docker image build and publishing to GHCR
+- deployment to self-hosted runner
+- deployment verification
+
+### Verification:
+Deployment verification checks:
+- application availability
+- nginx reverse proxy accessibility
+- successful HTTP response from deployed service
+
+### Deployment:
+Deployment is triggered automatically on Git tag push.
+
+Example:
+
+```bash
+git tag v1.0.3
+git push origin v1.0.3
